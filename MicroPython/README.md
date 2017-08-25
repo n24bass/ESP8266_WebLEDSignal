@@ -1,3 +1,5 @@
-infinite loop さんが [Crystal Signal Pi]([http://crystal-signal.com/]) と言う製品を発売されました。Raspberry Pi を使った RGB color LED 信号灯です。根が貧乏性なワタシは、NodeMCU で間に合うよね、と思い試してみました。当初は MicroPython で考えてみたものの、socket の非同期動作ができないと言うことで不慣れな Lua で書いています。結局 socket の非同期処理とは関係なく、コマンドのパラメータをグローバルに置いてタイマで LED の点滅制御をしています。排他、それ何？みたいな雑なコードですみません。無駄に 100ms 毎にタイマ割込みを入れているのは PWM による LED の明るさ制御も自前でやってみようとした名残りです。
+このプログラムは前に書いた [NodeMCU で web LED signal](http://qiita.com/n24bass/items/bc96baaaad7359dca9bc) の MicroPython 版です。処理内容はほぼ同じで新たなリクエストがあると現在の処理をキャンセルします。点滅の間隔を直接タイマの設定値にしている点が異なります。元の Lua のコードは PWM もタイマ処理でしようかと考えていた名残りで無駄に何度もタイマ割込みをしていたのを止めました。
 
-http://example.com//ctrl/?red=0&green=64&blue=255&period=500&rpt=300 のようににして使います。[YouTube](https://youtu.be/98aU_3ST-Mc)にバラックで動作中の様子を置きました。
+この MicroPython 実装では一旦ステーションモードでアクセスポイントに接続すると、その接続情報を記憶してリセット後にも自動的に接続を試行します。また、アクセスポイントモードでも動作しています。その辺は適当に制御が必要でしょう。
+
+[YouTube](https://www.youtube.com/watch?v=48F32NLfHhA)の動画も更新しました。
